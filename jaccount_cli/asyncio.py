@@ -19,8 +19,13 @@ LOGIN_URL = "https://jaccount.sjtu.edu.cn/jaccount/ulogin"
 
 
 class JaccountCLIAsyncIO:
-    def __init__(self, base_url: str):
-        self.session: ClientSession = ClientSession(headers=JACCOUNT_HEADERS)
+    def __init__(self, base_url: str, session: Optional[ClientSession] = None):
+        if session:
+            self.session = session
+            self._session_autoclose = False
+        else:
+            self.session: ClientSession = ClientSession(headers=JACCOUNT_HEADERS)
+            self._session_autoclose = True
         self.base_url: str = base_url
         self.cookies: Optional[SimpleCookie[str]] = None
         self.captcha_image: Optional[Image] = None
@@ -35,7 +40,8 @@ class JaccountCLIAsyncIO:
         exc_val: Optional[BaseException],
         exc_tb: Optional[TracebackType],
     ) -> None:
-        await self.session.close()
+        if self._session_autoclose:
+            await self.session.close()
 
     async def init(self):
         async with self.session.get(self.base_url) as response:
