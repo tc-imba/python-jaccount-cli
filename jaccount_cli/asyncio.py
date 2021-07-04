@@ -3,6 +3,7 @@ from io import BytesIO
 from types import TracebackType
 from typing import Optional, Type, Dict, Any
 from http.cookies import SimpleCookie
+from urllib.parse import urlparse
 
 from aiohttp import ClientSession
 from bs4 import BeautifulSoup
@@ -78,3 +79,9 @@ class JaccountCLIAsyncIO:
     def captcha_generate_ascii(self):
         image_to_ascii = ImageToAscii(self.captcha_image)
         return image_to_ascii.clean()
+
+    def get_cookies(self):
+        url = urlparse(self.base_url)
+        domain_url = "{}://{}".format(url.scheme, url.netloc)
+        cookies = self.session.cookie_jar.filter_cookies(domain_url)
+        return cookies
