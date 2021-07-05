@@ -28,7 +28,7 @@ class JaccountCLIAsyncIO:
             self._session_autoclose = True
         self.base_url: str = base_url
         self.cookies: Optional[SimpleCookie[str]] = None
-        self.captcha_image: Optional[Image] = None
+        self.captcha_image: Optional[BytesIO] = None
         self.params: Dict[str, Any] = {}
 
     async def __aenter__(self) -> "JaccountCLIAsyncIO":
