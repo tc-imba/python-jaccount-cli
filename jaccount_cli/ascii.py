@@ -98,7 +98,7 @@ class ImageToAscii:
         result = []
         for line in self.ascii_image.split("\n"):
             blank, others = count(line.strip(), self.width)
-            if others > self.width / 40.0:
+            if others >= self.width / 40.0:
                 result.append(line)
         height = len(result)
         start = 0

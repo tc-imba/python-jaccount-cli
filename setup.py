@@ -10,7 +10,7 @@ def get_long_description():
 
 setup(
     name="jaccount-cli",
-    version="0.0.4",
+    version="0.0.5",
     url="https://github.com/tc-imba/python-jaccount-cli",
     license="MIT",
     description="A small plugin to help use jaccount login in cli programs.",
